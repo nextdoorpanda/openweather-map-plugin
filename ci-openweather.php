@@ -54,10 +54,28 @@ function ciopenweather_settings_markup() {
                         </fieldset>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="location"><?php esc_html_e( 'Your Location', 'ci-openweather' ); ?></label></th>
+                    <td>
+                        <fieldset>
+                            <input id="location" name="location" value="" type="text" autocomplete="off" class="widefat">
+                            <p><?php echo wp_kses( __( 'Enter your <strong>location</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ); ?></p>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="measurement-unit"><?php esc_html_e( 'Unit', 'ci-openweather' ); ?></label></th>
+                    <td>
+                        <fieldset>
+                            <input id="measurement-unit" name="measurement-unit" value="" type="text" autocomplete="off" class="widefat">
+                            <p><?php echo wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ); ?></p>
+                        </fieldset>
+                    </td>
+                </tr>
             </table>
 
             <p class="submit">
-                <input type="submit" class="button-primary" name="ci-openweather-save" value="<?php esc_html_e( 'Save Changes', 'ci-openweather' ); ?>"/>
+                <input type="submit" class="button-primary" name="openweather-save" value="<?php esc_html_e( 'Save Changes', 'ci-openweather' ); ?>"/>
             </p>
         </form>
 	</div>
@@ -77,5 +95,9 @@ $filter_name = "plugin_action_links_" . plugin_basename( __FILE__ );
 add_filter( $filter_name, 'ciopenweather_add_settings_link');
 
 
-
+// Register shortcode
 add_shortcode( 'ci-openweather', array( 'shortcode_ciopenweather' ) );
+
+function shortcode_ciopenweather() {
+
+}
