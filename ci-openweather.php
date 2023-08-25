@@ -75,3 +75,7 @@ function ciopenweather_add_settings_link( $links ) {
 
 $filter_name = "plugin_action_links_" . plugin_basename( __FILE__ );
 add_filter( $filter_name, 'ciopenweather_add_settings_link');
+
+
+
+add_shortcode( 'ci-openweather', array( 'shortcode_ciopenweather' ) );
