@@ -10,7 +10,7 @@
  * Author URI:        https://cssigniter.com/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-  * Text Domain:      ciweather
+  * Text Domain:      ci-openweather
  * Domain Path:       /languages
  */
 
@@ -19,21 +19,21 @@ if ( ! defined( 'WPINC') ) {
 	die;
 }
 
-DEFINE ('CIWEATHER_URL', plugin_dir_url( __FILE__ ));
+DEFINE ( 'CIOPENWEATHER_URL', plugin_dir_url( __FILE__ ));
 
-function ciweather_settings_pages() {
+function ciopenweather_settings_page() {
 	add_submenu_page(
 		'options-general.php',
-		__( 'OpenWeather Map', 'ciweather' ),
-		__( 'Weather settings', 'ciweather' ),
+		__( 'OpenWeather Map Settings', 'ci-openweather' ),
+		__( 'Weather settings', 'ci-openweather' ),
 		'manage_options',
-		'ciweather-settings',
-		'ciweather_settings_subpage_markup',
+		'ciopenweather-settings',
+		'ciopenweather_settings_markup',
 	);
 }
-add_action('admin_menu', 'ciweather_settings_pages' );
+add_action( 'admin_menu', 'ciopenweather_settings_page' );
 
-function ciweather_settings_subpage_markup() {
+function ciopenweather_settings_markup() {
 
 	if ( ! current_user_can( 'manage_options' ) ){
 		return;
@@ -41,8 +41,25 @@ function ciweather_settings_subpage_markup() {
 	?>
 
 	<div class="wrap">
-		<h1><?php esc_html_e( get_admin_page_title() ); ?></h1>
-		<p><?php esc_html_e( 'Weather info.', 'ciweather' ); ?></p>
+		<h1><?php esc_html_e( get_admin_page_title(), 'ci-openweather' ); ?></h1>
+        <form method="post" action="">
+
+            <table class="form-table">
+               <tr valign="top">
+                    <th scope="row"><label for="openweather_api_key"><?php esc_html_e( 'OpenWeather API Key', 'ci-openweather' ); ?></label></th>
+                    <td>
+                        <fieldset>
+                            <input id="openweather_api_key" name="openweather_api_key" value="" type="text" autocomplete="off" class="widefat">
+                            <p><?php echo wp_kses( __( 'Enter your <strong>API key</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ); ?></p>
+                        </fieldset>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="submit">
+                <input type="submit" class="button-primary" name="ci-openweather-save" value="<?php esc_html_e( 'Save Changes', 'ci-openweather' ); ?>"/>
+            </p>
+        </form>
 	</div>
 
 <?php
@@ -50,12 +67,11 @@ function ciweather_settings_subpage_markup() {
 }
 
 // Add link to settings page
-function ciweather_add_settings_link( $links ) {
-    $settings_link = '<a href"admin.php?page=ciweather">' . __( 'Settings', 'ciweather' ) . '</a>';
+function ciopenweather_add_settings_link( $links ) {
+    $settings_link = '<a href="options-general.php?page=ciopenweather-settings">' . __( 'Settings', 'ci-openweather' ) . '</a>';
     array_push( $links, $settings_link );
     return $links;
 }
 
 $filter_name = "plugin_action_links_" . plugin_basename( __FILE__ );
-add_filter( $filter_name, 'ciweather_add_settings_link');
-
+add_filter( $filter_name, 'ciopenweather_add_settings_link');
