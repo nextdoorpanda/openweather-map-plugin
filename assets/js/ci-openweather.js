@@ -1,36 +1,11 @@
-function getDeviceLocation() {
-    const options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
+function getData() {
+    const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
     };
 
-    return new Promise((resolve, reject) => {
-        function success(pos) {
-            const crd = pos.coords;
-            const latitude = crd.latitude;
-            const longitude = crd.longitude;
-
-            resolve({ latitude, longitude });
-        }
-
-        function error(err) {
-            console.warn(`ERROR(${err.code}): ${err.message}`);
-            reject(err);
-        }
-
-        navigator.geolocation.getCurrentPosition(success, error, options);
-    });
+    fetch("http://api.openweathermap.org/data/2.5/forecast?q=Athens,GR&limit=1&appid=063f1e01c653468ba9b0d5726b9cee53", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 }
-
-getDeviceLocation()
-    .then((location) => {
-        console.log("Latitude:", location.latitude);
-        console.log("Longitude:", location.longitude);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-
-
