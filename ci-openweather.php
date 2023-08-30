@@ -21,6 +21,19 @@ if ( ! defined( 'WPINC') ) {
 
 DEFINE ( 'CIOPENWEATHER_URL', plugin_dir_url( __FILE__ ));
 
+
+// Register and enqueue scripts
+function ciopenweather_enqueue_scripts()
+{
+
+	wp_register_script( 'ci-openweather-js', CIOPENWEATHER_URL . '/assets/js/ci-openweather.js', array(), false, true );
+
+	wp_enqueue_script('ci-openweather-js');
+
+}
+add_action( 'wp_enqueue_scripts', 'ciopenweather_enqueue_scripts' );
+
+
 function ciopenweather_settings_page() {
 	add_submenu_page(
 		'options-general.php',
