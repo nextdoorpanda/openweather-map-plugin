@@ -28,7 +28,7 @@ function ciopenweather_enqueue_scripts()
 
 	wp_register_script( 'ci-openweather-js', CIOPENWEATHER_URL . '/assets/js/ci-openweather.js', array(), false, true );
 
-	wp_enqueue_script('ci-openweather-js');
+//	wp_enqueue_script('ci-openweather-js');
 
 }
 add_action( 'wp_enqueue_scripts', 'ciopenweather_enqueue_scripts' );
@@ -113,4 +113,15 @@ add_shortcode( 'ci-openweather', array( 'shortcode_ciopenweather' ) );
 
 function shortcode_ciopenweather() {
 
+}
+
+add_filter('the_content', 'ciopenweather_show_weather');
+
+function ciopenweather_show_weather( $content ) {
+    if( is_page('weather') ) {
+	    $weather_output = '<div id="weather-output"></div>';
+	    $content .= $weather_output;
+	    wp_enqueue_script('ci-openweather-js');
+    }
+	return $content;
 }
