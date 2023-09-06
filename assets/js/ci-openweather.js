@@ -41,10 +41,15 @@
 
     getData
         .then(weatherData => {
-            const outputDiv = document.querySelector('#weather-output');
-            outputDiv.innerHTML = JSON.stringify(weatherData.list[0].weather[0].icon);
+            const weatherDataString = JSON.stringify(weatherData.list[0].weather[0].icon);
+            outputData(weatherDataString);
         })
         .catch(error => {
             console.error('Error:', error);
         });
+
+    function outputData(weatherData) {
+        const outputDiv = document.querySelector('#weather-output');
+        outputDiv.innerHTML = weatherData;
+    }
 })();
