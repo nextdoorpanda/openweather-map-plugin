@@ -111,18 +111,19 @@ add_filter( $filter_name, 'ciopenweather_add_settings_link' );
 // Register shortcode.
 add_shortcode( 'ci-openweather', 'shortcode_ciopenweather' );
 
-function shortcode_ciopenweather( $atts = [], $content = null ) {
-	$content .= 'IT WORKS';
+function shortcode_ciopenweather( $atts = [], $content ) {
+	$weather_output = '<div id="weather-output"></div>';
+	$content .= $weather_output;
 	return $content;
 }
-
-add_filter( 'the_content', 'ciopenweather_show_weather' );
-
-function ciopenweather_show_weather( $content ) {
-	if ( is_page( 'weather' ) ) {
-		$weather_output = '<div id="weather-output"></div>';
-		$content .= $weather_output;
-//		wp_enqueue_script( 'ci-openweather-js' );
-	}
-	return $content;
-}
+//
+//add_filter( 'the_content', 'ciopenweather_show_weather' );
+//
+//function ciopenweather_show_weather( $content ) {
+//	if ( is_page( 'weather' ) ) {
+//		$weather_output = '<div id="weather-output"></div>';
+//		$content .= $weather_output;
+////		wp_enqueue_script( 'ci-openweather-js' );
+//	}
+//	return $content;
+//}
