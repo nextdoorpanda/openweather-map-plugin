@@ -42,7 +42,9 @@
     getData
         .then(weatherData => {
             const outputDiv = document.querySelector('#weather-output');
-            outputDiv.innerHTML = JSON.stringify(weatherData);
+            outputDiv.innerHTML = JSON.stringify(weatherData.list[0].weather[0].icon);
+            //https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon
+            //https://openweathermap.org/weather-conditions
         })
         .catch(error => {
             console.error('Error:', error);
