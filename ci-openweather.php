@@ -109,10 +109,11 @@ add_filter( $filter_name, 'ciopenweather_add_settings_link' );
 
 
 // Register shortcode.
-add_shortcode( 'ci-openweather', array( 'shortcode_ciopenweather' ) );
+add_shortcode( 'ci-openweather', 'shortcode_ciopenweather' );
 
-function shortcode_ciopenweather() {
-
+function shortcode_ciopenweather( $atts = [], $content = null ) {
+	$content .= 'IT WORKS';
+	return $content;
 }
 
 add_filter( 'the_content', 'ciopenweather_show_weather' );
