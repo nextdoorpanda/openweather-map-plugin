@@ -116,14 +116,3 @@ function shortcode_ciopenweather( $atts = [], $content ) {
 	$content .= $weather_output;
 	return $content;
 }
-//
-//add_filter( 'the_content', 'ciopenweather_show_weather' );
-//
-//function ciopenweather_show_weather( $content ) {
-//	if ( is_page( 'weather' ) ) {
-//		$weather_output = '<div id="weather-output"></div>';
-//		$content .= $weather_output;
-////		wp_enqueue_script( 'ci-openweather-js' );
-//	}
-//	return $content;
-//}
