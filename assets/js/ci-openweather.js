@@ -41,15 +41,23 @@
 
     getData
         .then(weatherData => {
-            const weatherDataString = JSON.stringify(weatherData.list[0].weather[0].icon);
-            outputData(weatherDataString);
+            outputData(weatherData);
         })
         .catch(error => {
             console.error('Error:', error);
         });
 
     function outputData(weatherData) {
+        const weatherCity = weatherData.city.name;
+        const weatherCountry = weatherData.city.country;
+        const weatherDescription = weatherData.list[0].weather[0].description;
+        const weatherIconCode = weatherData.list[0].weather[0].icon;
+        const weatherIcon = `http://openweathermap.org/img/w/${weatherIconCode}.png`;
+        const weatherIconImg = `<img src="${weatherIcon}" alt=""/>`;
+
         const outputDiv = document.querySelector('#weather-output');
-        outputDiv.innerHTML = weatherData;
+        outputDiv.innerHTML = `${weatherCity} ${weatherCountry}`;
+        outputDiv.innerHTML += '<br>';
+        outputDiv.innerHTML +=  `${weatherDescription} ${weatherIconImg}`;
     }
 })();
