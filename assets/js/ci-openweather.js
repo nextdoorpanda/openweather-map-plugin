@@ -35,14 +35,18 @@
     function outputData(weatherData) {
         const weatherCity = weatherData.city.name;
         const weatherCountry = weatherData.city.country;
+        const weatherTitle = weatherData.list[0].weather[0].main;
         const weatherDescription = weatherData.list[0].weather[0].description;
         const weatherIconCode = weatherData.list[0].weather[0].icon;
         const weatherIcon = `http://openweathermap.org/img/w/${weatherIconCode}.png`;
-        const weatherIconImg = `<img src="${weatherIcon}" alt=""/>`;
+        const weatherIconImg = `<img src="${weatherIcon}" alt="${weatherTitle} icon"/>`;
 
-        const outputDiv = document.querySelector('#weather-output');
-        outputDiv.innerHTML = `${weatherCity} ${weatherCountry}`;
-        outputDiv.innerHTML += '<br>';
-        outputDiv.innerHTML +=  `${weatherDescription} ${weatherIconImg}`;
+        const outputDiv = document.querySelectorAll('.weather-output');
+        outputDiv.forEach( item => {
+            item.innerHTML = `${weatherCity} ${weatherCountry}`;
+            item.innerHTML += '<br>';
+            item.innerHTML +=  `${weatherDescription} ${weatherIconImg}`;
+        });
+
     }
 })();
