@@ -112,7 +112,7 @@ add_filter( $filter_name, 'ciopenweather_add_settings_link' );
 add_shortcode( 'ci-openweather', 'shortcode_ciopenweather' );
 
 function shortcode_ciopenweather( $atts = [], $content ) {
-	$weather_output = '<div id="weather-output"></div>';
+	$weather_output = '<div class="weather-output"></div>';
 	$content .= $weather_output;
 	return $content;
 }
