@@ -35,7 +35,7 @@ add_action( 'wp_enqueue_scripts', 'ciopenweather_enqueue_scripts' );
 
 
 function ciopenweather_settings_page() {
-	add_options_page( 'OpenWeather Map Settings', 'Weather settings', 'manage_options', 'ciopenweather-settings', 'ciopenweather_settings_markup' );
+	add_options_page( 'OpenWeather Map', 'Weather settings', 'manage_options', 'ciopenweather-settings', 'ciopenweather_settings_markup' );
 }
 add_action( 'admin_menu', 'ciopenweather_settings_page' );
 
@@ -76,7 +76,7 @@ function ciopenweather_settings_markup() {
 		// Create section of Page
 		$ciopenweather_settings_section = 'ci-openweather_main_section';
 		$ciopenweather_page = 'ci-openweather';
-		add_settings_section( $ciopenweather_settings_section, __( 'Post Types', 'ci-openweather' ), 'ciopenweather_main_section_text_output', $ciopenweather_page );
+		add_settings_section( $ciopenweather_settings_section, __( 'Settings', 'ci-openweather' ), 'ciopenweather_main_section_text_output', $ciopenweather_page );
 
 		// Add fields to section
 		add_settings_field( $ciopenweather_api_key_option, __('OpenWeather API Key', 'ci-openweather' ), 'ciopenweather_api_key_option_input', $ciopenweather_page, $ciopenweather_settings_section );
@@ -87,19 +87,7 @@ function ciopenweather_settings_markup() {
 	}
 
 function ciopenweather_main_section_text_output() {
-	_e( '<p>You can specify the post type for Require Featured Image to work on. By default it works on Posts only.</p><p>If you\'re not seeing a post type here that you think should be, it probably does not have support for featured images. Only post types that support featured images will appear on this list.</p>', 'require-featured-image' );
-}
-
-function ciopenweather_api_key_text_output() {
-	_e('<p>The minimum acceptable size can be set for featured images. This size means that posts with images smaller than the specified dimensions cannot be published. By default the sizes are zero, so any image size will be accepted.</p>','require-featured-image');
-}
-
-function ciopenweather_location_text_output() {
-	_e('<p>The minimum acceptable size can be set for featured images. This size means that posts with images smaller than the specified dimensions cannot be published. By default the sizes are zero, so any image size will be accepted.</p>','require-featured-image');
-}
-
-function ciopenweather_unit_text_output() {
-	_e('<p>The minimum acceptable size can be set for featured images. This size means that posts with images smaller than the specified dimensions cannot be published. By default the sizes are zero, so any image size will be accepted.</p>','require-featured-image');
+	_e( '<p>Please enter your preferred settings.</p>', 'ci-openweather' );
 }
 
 function ciopenweather_api_key_option_input() {
