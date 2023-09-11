@@ -23,11 +23,9 @@ DEFINE( 'CIOPENWEATHER_URL', plugin_dir_url( __FILE__ ) );
 
 
 // Register and enqueue scripts.
-function ciopenweather_enqueue_scripts()
-{
+function ciopenweather_enqueue_scripts() {
 
 	wp_register_script( 'ci-openweather-js', CIOPENWEATHER_URL . '/assets/js/ci-openweather.js', array(), false, true );
-
 
 	$api_key  = get_option( 'ci-openweather_api_key' );
 	$location = get_option( 'ci-openweather_location' );
