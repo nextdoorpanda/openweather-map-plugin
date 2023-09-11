@@ -20,7 +20,7 @@
         fetch(queryURL, requestOptions)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Didn't get any response");
+                    throw new Error("Didn't get any response.");
                 }
                 return response.json();
             })
@@ -58,7 +58,6 @@
         const outputDiv = document.querySelectorAll('.weather-output');
         outputDiv.forEach( item => {
             item.style.padding = "20px";
-            // item.style.width = "100%";
             item.innerHTML = setLayout( weatherIcon, weatherTitle, weatherLocation, weatherTemperature, weatherDescription );
         });
 
