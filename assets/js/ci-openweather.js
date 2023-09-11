@@ -6,7 +6,11 @@
         redirect: 'follow'
     };
 
-    const queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=Athens,GR&cnt=1&appid=063f1e01c653468ba9b0d5726b9cee53`;
+    const api_key = weatherOptionsValues.api_key;
+    const location = weatherOptionsValues.location;
+    const unit = weatherOptionsValues.unit;
+
+    const queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=1&units=${unit}&appid=${api_key}`;
 
     const getData = new Promise((resolve, reject) => {
         fetch(queryURL, requestOptions)
@@ -35,18 +39,46 @@
     function outputData(weatherData) {
         const weatherCity = weatherData.city.name;
         const weatherCountry = weatherData.city.country;
+        const weatherLocation = `${weatherCity}, ${weatherCountry}`;
         const weatherTitle = weatherData.list[0].weather[0].main;
         const weatherDescription = weatherData.list[0].weather[0].description;
         const weatherIconCode = weatherData.list[0].weather[0].icon;
         const weatherIcon = `http://openweathermap.org/img/w/${weatherIconCode}.png`;
-        const weatherIconImg = `<img src="${weatherIcon}" alt="${weatherTitle} icon"/>`;
+        const weatherTemperatureValue = `${parseInt(weatherData.list[0].main.temp)}`;
+        let weatherTemperatureDegree = 'K';
+        weatherOptionsValues.unit = 'metric' ? weatherTemperatureDegree = '&deg;C' : weatherTemperatureDegree = '&deg;F';
+        const weatherTemperature = `${weatherTemperatureValue}${weatherTemperatureDegree}`;
 
         const outputDiv = document.querySelectorAll('.weather-output');
         outputDiv.forEach( item => {
-            item.innerHTML = `${weatherCity} ${weatherCountry}`;
-            item.innerHTML += '<br>';
-            item.innerHTML +=  `${weatherDescription} ${weatherIconImg}`;
+            item.style.padding = "20px";
+            // item.style.width = "100%";
+            item.innerHTML = setLayout( weatherIcon, weatherTitle, weatherLocation, weatherTemperature, weatherDescription );
         });
+
+        function setLayout( weatherIcon, weatherTitle, weatherLocation, weatherTemperature, weatherDescription ) {
+            return `
+            <div class="weather-widget d-flex justify-content-center align-items-center">
+                <div class="container-fluid">
+                    <div class="row no-gutters">
+                        <div class="col-md-3">
+                            <div class="weather-component d-flex justify-content-center align-items-center">
+                                <img src="${weatherIcon}" alt="${weatherTitle} icon"/>
+                            </div>
+                        </div>
+        
+                        <div class="col-md-9">
+                            <div class="weather-component d-flex flex-column align-items-center justify-content-center">
+                                <div class="weather-location">${weatherLocation}</div>
+                                <div class="weather-details text-nowrap">${weatherTemperature}, ${weatherDescription}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+        }
 
     }
 })();

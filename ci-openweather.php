@@ -28,21 +28,24 @@ function ciopenweather_enqueue_scripts()
 
 	wp_register_script( 'ci-openweather-js', CIOPENWEATHER_URL . '/assets/js/ci-openweather.js', array(), false, true );
 
-	wp_enqueue_script('ci-openweather-js');
 
+	$api_key = get_option('ci-openweather_api_key');
+	$location = get_option('ci-openweather_location');
+	$unit = get_option('ci-openweather_unit');
+
+	// Pass DB values to JS script
+	wp_localize_script('ci-openweather-js', 'weatherOptionsValues', array(
+		'api_key' => $api_key,
+		'location' => $location,
+		'unit' => $unit,));
+
+	wp_enqueue_script('ci-openweather-js');
 }
 add_action( 'wp_enqueue_scripts', 'ciopenweather_enqueue_scripts' );
 
 
 function ciopenweather_settings_page() {
-	add_submenu_page(
-		'options-general.php',
-		__( 'OpenWeather Map Settings', 'ci-openweather' ),
-		__( 'Weather settings', 'ci-openweather' ),
-		'manage_options',
-		'ciopenweather-settings',
-		'ciopenweather_settings_markup',
-	);
+	add_options_page( 'OpenWeather Map', 'Weather settings', 'manage_options', 'ciopenweather-settings', 'ciopenweather_settings_markup' );
 }
 add_action( 'admin_menu', 'ciopenweather_settings_page' );
 
@@ -54,48 +57,75 @@ function ciopenweather_settings_markup() {
 	?>
 
 	<div class="wrap">
-		<h1><?php esc_html_e( get_admin_page_title(), 'ci-openweather' ); ?></h1>
-		<form method="post" action="">
-
-			<table class="form-table">
-				<tr valign="top">
-					<th scope="row"><label for="openweather_api_key"><?php esc_html_e( 'OpenWeather API Key', 'ci-openweather' ); ?></label></th>
-					<td>
-						<fieldset>
-							<input id="openweather_api_key" name="openweather_api_key" value="" type="text" autocomplete="off" class="widefat">
-							<p><?php echo wp_kses( __( 'Enter your <strong>API key</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ); ?></p>
-						</fieldset>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="location"><?php esc_html_e( 'Your Location', 'ci-openweather' ); ?></label></th>
-					<td>
-						<fieldset>
-							<input id="location" name="location" value="" type="text" autocomplete="off" class="widefat">
-							<p><?php echo wp_kses( __( 'Enter your <strong>location</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ); ?></p>
-						</fieldset>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="measurement-unit"><?php esc_html_e( 'Unit', 'ci-openweather' ); ?></label></th>
-					<td>
-						<fieldset>
-							<input id="measurement-unit" name="measurement-unit" value="" type="text" autocomplete="off" class="widefat">
-							<p><?php echo wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ); ?></p>
-						</fieldset>
-					</td>
-				</tr>
-			</table>
-
-			<p class="submit">
-				<input type="submit" class="button-primary" name="openweather-save" value="<?php esc_html_e( 'Save Changes', 'ci-openweather' ); ?>"/>
-			</p>
+		<h2><?php _e( get_admin_page_title(), 'ci-openweather' ) ?></h2>
+		<form action="options.php" method="post">
+			<?php settings_fields( 'ci-openweather' ); ?>
+			<?php do_settings_sections( 'ci-openweather' ); ?>
+			<input name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes', 'ci-openweather' ); ?>" class="button button-primary" />
 		</form>
 	</div>
 
 <?php
 
 }
+
+	add_action( 'admin_init', 'ciopenweather_admin_init' );
+	function ciopenweather_admin_init(){
+		// Create Settings
+		$ciopenweather_option_group = 'ci-openweather';
+
+		$ciopenweather_api_key_option = 'ci-openweather_api_key';
+		register_setting( $ciopenweather_option_group, $ciopenweather_api_key_option );
+
+		$ciopenweather_location_option = 'ci-openweather_location';
+		register_setting( $ciopenweather_option_group, $ciopenweather_location_option );
+
+		$ciopenweather_unit_option = 'ci-openweather_unit';
+		register_setting( $ciopenweather_option_group, $ciopenweather_unit_option );
+
+		// Create section of Page
+		$ciopenweather_settings_section = 'ci-openweather_main_section';
+		$ciopenweather_page = 'ci-openweather';
+		add_settings_section( $ciopenweather_settings_section, __( 'Settings', 'ci-openweather' ), 'ciopenweather_main_section_text_output', $ciopenweather_page );
+
+		// Add fields to section
+		add_settings_field( $ciopenweather_api_key_option, __('OpenWeather API Key', 'ci-openweather' ), 'ciopenweather_api_key_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+
+		add_settings_field($ciopenweather_location_option, __('Your Location', 'ci-openweather'), 'ciopenweather_location_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+
+		add_settings_field($ciopenweather_unit_option, __('Unit', 'ci-openweather'), 'ciopenweather_unit_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+	}
+
+function ciopenweather_main_section_text_output() {
+	_e( '<p>Please enter your preferred settings.</p>', 'ci-openweather' );
+}
+
+function ciopenweather_api_key_option_input() {
+	$api_key = get_option( 'ci-openweather_api_key' );
+	echo '<input id="openweather-api_key" name="ci-openweather_api_key" value="' . esc_attr( $api_key ) . '" type="text" autocomplete="off" class="widefat">';
+	echo "<p>" . wp_kses( __( 'Enter your <strong>API key</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
+}
+
+function ciopenweather_location_option_input() {
+	$location = get_option( 'ci-openweather_location' );
+	echo '<input id="openweather-location" name="ci-openweather_location" value="' . esc_attr( $location ) . '" type="text" autocomplete="off" class="widefat">';
+	echo "<p>" . wp_kses( __( 'Enter your <strong>location</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
+}
+
+function ciopenweather_unit_option_input() {
+	$unit = get_option( 'ci-openweather_unit' );
+	?>
+	<select name="ci-openweather_unit">
+		<option value="standard" <?php selected(esc_attr( $unit ), 'standard'); ?>>Standard</option>
+		<option value="metric" <?php selected(esc_attr( $unit ), 'metric'); ?>>Metric</option>
+		<option value="imperial" <?php selected(esc_attr( $unit ), 'imperial'); ?>>Imperial</option>
+	</select>
+	<?php
+//	echo '<input id="openweather-unit" name="ci-openweather_unit" value="' . esc_attr( $unit ) . '" type="text" autocomplete="off" class="widefat">';
+	echo "<p>" . wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
+}
+
+
 
 // Add link to settings page.
 function ciopenweather_add_settings_link( $links ) {
