@@ -10,6 +10,10 @@
     const location = weatherOptionsValues.location;
     const unit = weatherOptionsValues.unit;
 
+    if (!api_key || !location) {
+        return;
+    }
+
     const queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=1&units=${unit}&appid=${api_key}`;
 
     const getData = new Promise((resolve, reject) => {
