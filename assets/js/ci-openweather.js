@@ -45,9 +45,11 @@
         const weatherIconCode = weatherData.list[0].weather[0].icon;
         const weatherIcon = `http://openweathermap.org/img/w/${weatherIconCode}.png`;
         const weatherTemperatureValue = `${parseInt(weatherData.list[0].main.temp)}`;
-        let weatherTemperatureDegree = 'K';
-        weatherOptionsValues.unit = 'metric' ? weatherTemperatureDegree = '&deg;C' : weatherTemperatureDegree = '&deg;F';
-        const weatherTemperature = `${weatherTemperatureValue}${weatherTemperatureDegree}`;
+        const weatherTemperatureDegrees = [{'standard': 'K'}, {'metric': 'C'}, {'imperial': 'F'}];
+        const weatherTemperatureDegree = weatherTemperatureDegrees
+            .filter( obj => weatherOptionsValues.unit in obj)
+            .map(obj => obj[weatherOptionsValues.unit]);
+        const weatherTemperature = `${weatherTemperatureValue}&deg;${weatherTemperatureDegree}`;
 
         const outputDiv = document.querySelectorAll('.weather-output');
         outputDiv.forEach( item => {
