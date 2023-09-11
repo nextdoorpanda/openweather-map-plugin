@@ -16,7 +16,7 @@
         fetch(queryURL, requestOptions)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Didn't got any response");
+                    throw new Error("Didn't get any response");
                 }
                 return response.json();
             })
