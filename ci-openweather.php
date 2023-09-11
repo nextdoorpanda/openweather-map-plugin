@@ -34,11 +34,14 @@ function ciopenweather_enqueue_scripts()
 	$unit     = get_option( 'ci-openweather_unit' );
 
 	// Pass DB values to JS script.
-	wp_localize_script( 'ci-openweather-js', 'weatherOptionsValues', array(
-		'api_key'  => $api_key,
-		'location' => $location,
-		'unit'     => $unit,
-	)
+	wp_localize_script(
+		'ci-openweather-js',
+		'weatherOptionsValues',
+		array(
+			'api_key'  => $api_key,
+			'location' => $location,
+			'unit'     => $unit,
+		)
 	);
 
 	wp_enqueue_script( 'ci-openweather-js' );
