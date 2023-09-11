@@ -118,11 +118,13 @@ function ciopenweather_location_option_input() {
 function ciopenweather_unit_option_input() {
 	$unit = get_option( 'ci-openweather_unit' );
 	?>
-	<select name="ci-openweather_unit">
-		<option value="imperial" <?php selected( esc_attr( $unit ), 'imperial' ); ?>>Imperial (&deg;F)</option>
-		<option value="metric" <?php selected( esc_attr( $unit ), 'metric' ); ?>>Celsius (&deg;C)</option>
-		<option value="standard" <?php selected( esc_attr( $unit ), 'standard' ); ?>>Kelvin (K)</option>
-	</select>
+	<label>
+		<select name="ci-openweather_unit">
+			<option value="imperial" <?php selected( esc_attr( $unit ), 'imperial' ); ?>>Imperial (&deg;F)</option>
+			<option value="metric" <?php selected( esc_attr( $unit ), 'metric' ); ?>>Celsius (&deg;C)</option>
+			<option value="standard" <?php selected( esc_attr( $unit ), 'standard' ); ?>>Kelvin (K)</option>
+		</select>
+	</label>
 	<?php
 	echo '<p>' . wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . '</p>';
 }
@@ -132,7 +134,8 @@ function ciopenweather_unit_option_input() {
 // Add link to settings page.
 function ciopenweather_add_settings_link( $links ) {
 	$settings_link = '<a href="options-general.php?page=ciopenweather-settings">' . __( 'Settings', 'ci-openweather' ) . '</a>';
-	array_push( $links, $settings_link );
+
+	$links[] = $settings_link;
 	return $links;
 }
 
