@@ -91,17 +91,20 @@ function ciopenweather_main_section_text_output() {
 }
 
 function ciopenweather_api_key_option_input() {
-	echo '<input id="openweather-api_key" name="openweather-api-key" value="" type="text" autocomplete="off" class="widefat">';
+		$api_key = get_option( 'ci-openweather_api_key' );
+	echo '<input id="openweather-api_key" name="ci-openweather_api_key" value="' . esc_attr( $api_key ) . '" type="text" autocomplete="off" class="widefat">';
 	echo "<p>" . wp_kses( __( 'Enter your <strong>API key</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
 }
 
 function ciopenweather_location_option_input() {
-	echo '<input id="openweather-location" name="openweather-location" value="" type="text" autocomplete="off" class="widefat">';
+		$location = get_option( 'ci-openweather_location' );
+	echo '<input id="openweather-location" name="ci-openweather_location" value="' . esc_attr( $location ) . '" type="text" autocomplete="off" class="widefat">';
 	echo "<p>" . wp_kses( __( 'Enter your <strong>location</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
 }
 
 function ciopenweather_unit_option_input() {
-	echo '<input id="openweather-unit" name="openweather-unit" value="" type="text" autocomplete="off" class="widefat">';
+		$unit = get_option( 'ci-openweather_unit' );
+	echo '<input id="openweather-unit" name="ci-openweather_unit" value="' . esc_attr( $unit ) . '" type="text" autocomplete="off" class="widefat">';
 	echo "<p>" . wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
 }
 
