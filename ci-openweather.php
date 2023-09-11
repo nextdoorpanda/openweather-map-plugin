@@ -69,36 +69,35 @@ function ciopenweather_settings_markup() {
 	</div>
 
 <?php
-
 }
 
-	add_action( 'admin_init', 'ciopenweather_admin_init' );
-	function ciopenweather_admin_init() {
-		// Create Settings.
-		$ciopenweather_option_group = 'ci-openweather';
+add_action( 'admin_init', 'ciopenweather_admin_init' );
+function ciopenweather_admin_init() {
+	// Create Settings.
+	$ciopenweather_option_group = 'ci-openweather';
 
-		$ciopenweather_api_key_option = 'ci-openweather_api_key';
-		register_setting( $ciopenweather_option_group, $ciopenweather_api_key_option );
+	$ciopenweather_api_key_option = 'ci-openweather_api_key';
+	register_setting( $ciopenweather_option_group, $ciopenweather_api_key_option );
 
-		$ciopenweather_location_option = 'ci-openweather_location';
-		register_setting( $ciopenweather_option_group, $ciopenweather_location_option );
+	$ciopenweather_location_option = 'ci-openweather_location';
+	register_setting( $ciopenweather_option_group, $ciopenweather_location_option );
 
-		$ciopenweather_unit_option = 'ci-openweather_unit';
-		register_setting( $ciopenweather_option_group, $ciopenweather_unit_option );
+	$ciopenweather_unit_option = 'ci-openweather_unit';
+	register_setting( $ciopenweather_option_group, $ciopenweather_unit_option );
 
-		// Create section of Page.
-		$ciopenweather_settings_section = 'ci-openweather_main_section';
+	// Create section of Page.
+	$ciopenweather_settings_section = 'ci-openweather_main_section';
 
-		$ciopenweather_page = 'ci-openweather';
-		add_settings_section( $ciopenweather_settings_section, __( 'Settings', 'ci-openweather' ), 'ciopenweather_main_section_text_output', $ciopenweather_page );
+	$ciopenweather_page = 'ci-openweather';
+	add_settings_section( $ciopenweather_settings_section, __( 'Settings', 'ci-openweather' ), 'ciopenweather_main_section_text_output', $ciopenweather_page );
 
-		// Add fields to section.
-		add_settings_field( $ciopenweather_api_key_option, __( 'OpenWeather API Key', 'ci-openweather' ), 'ciopenweather_api_key_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+	// Add fields to section.
+	add_settings_field( $ciopenweather_api_key_option, __( 'OpenWeather API Key', 'ci-openweather' ), 'ciopenweather_api_key_option_input', $ciopenweather_page, $ciopenweather_settings_section );
 
-		add_settings_field( $ciopenweather_location_option, __( 'Your Location (e.g. "Athens, GR")', 'ci-openweather' ), 'ciopenweather_location_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+	add_settings_field( $ciopenweather_location_option, __( 'Your Location (e.g. "Athens, GR")', 'ci-openweather' ), 'ciopenweather_location_option_input', $ciopenweather_page, $ciopenweather_settings_section );
 
-		add_settings_field( $ciopenweather_unit_option, __( 'Unit', 'ci-openweather' ), 'ciopenweather_unit_option_input', $ciopenweather_page, $ciopenweather_settings_section );
-	}
+	add_settings_field( $ciopenweather_unit_option, __( 'Unit', 'ci-openweather' ), 'ciopenweather_unit_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+}
 
 function ciopenweather_main_section_text_output() {
 	echo '<p>' . esc_html_e( 'Please enter your preferred settings.', 'ci-openweather' ) . '</p>';
