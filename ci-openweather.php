@@ -121,7 +121,6 @@ function ciopenweather_unit_option_input() {
 		<option value="imperial" <?php selected(esc_attr( $unit ), 'imperial'); ?>>Imperial</option>
 	</select>
 	<?php
-//	echo '<input id="openweather-unit" name="ci-openweather_unit" value="' . esc_attr( $unit ) . '" type="text" autocomplete="off" class="widefat">';
 	echo "<p>" . wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
 }
 
