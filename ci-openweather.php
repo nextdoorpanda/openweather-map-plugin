@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name:       OpenWeather Map
  * Plugin URI:        https://#
  * Description:       Show a 5-day weather forecast for your area of residence.
@@ -12,7 +12,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:      ci-openweather
  * Domain Path:       /languages
- */
+ **/
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -68,7 +68,7 @@ function ciopenweather_settings_markup() {
 		</form>
 	</div>
 
-<?php
+	<?php
 }
 
 add_action( 'admin_init', 'ciopenweather_admin_init' );
