@@ -91,7 +91,7 @@ function ciopenweather_settings_markup() {
 		// Add fields to section
 		add_settings_field( $ciopenweather_api_key_option, __('OpenWeather API Key', 'ci-openweather' ), 'ciopenweather_api_key_option_input', $ciopenweather_page, $ciopenweather_settings_section );
 
-		add_settings_field($ciopenweather_location_option, __('Your Location', 'ci-openweather'), 'ciopenweather_location_option_input', $ciopenweather_page, $ciopenweather_settings_section );
+		add_settings_field($ciopenweather_location_option, __('Your Location (e.g. "Athens, GR")', 'ci-openweather'), 'ciopenweather_location_option_input', $ciopenweather_page, $ciopenweather_settings_section );
 
 		add_settings_field($ciopenweather_unit_option, __('Unit', 'ci-openweather'), 'ciopenweather_unit_option_input', $ciopenweather_page, $ciopenweather_settings_section );
 	}
