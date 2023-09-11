@@ -116,9 +116,9 @@ function ciopenweather_unit_option_input() {
 	$unit = get_option( 'ci-openweather_unit' );
 	?>
 	<select name="ci-openweather_unit">
-		<option value="standard" <?php selected(esc_attr( $unit ), 'standard'); ?>>Standard</option>
-		<option value="metric" <?php selected(esc_attr( $unit ), 'metric'); ?>>Metric</option>
-		<option value="imperial" <?php selected(esc_attr( $unit ), 'imperial'); ?>>Imperial</option>
+		<option value="imperial" <?php selected(esc_attr( $unit ), 'imperial'); ?>>Imperial (&deg;F)</option>
+		<option value="metric" <?php selected(esc_attr( $unit ), 'metric'); ?>>Celsius (&deg;C)</option>
+		<option value="standard" <?php selected(esc_attr( $unit ), 'standard'); ?>>Kelvin (K)</option>
 	</select>
 	<?php
 	echo "<p>" . wp_kses( __( 'Enter the <strong>unit of measurement</strong>.', 'ci-openweather' ), array( 'strong' => array() ) ) . "</p>";
