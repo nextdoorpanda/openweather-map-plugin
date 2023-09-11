@@ -28,8 +28,18 @@ function ciopenweather_enqueue_scripts()
 
 	wp_register_script( 'ci-openweather-js', CIOPENWEATHER_URL . '/assets/js/ci-openweather.js', array(), false, true );
 
-	wp_enqueue_script('ci-openweather-js');
 
+	$api_key = get_option('ci-openweather_api_key');
+	$location = get_option('ci-openweather_location');
+	$unit = get_option('ci-openweather_unit');
+
+	// Pass DB values to JS script
+	wp_localize_script('ci-openweather-js', 'weatherOptionsValues', array(
+		'api_key' => $api_key,
+		'location' => $location,
+		'unit' => $unit,));
+
+	wp_enqueue_script('ci-openweather-js');
 }
 add_action( 'wp_enqueue_scripts', 'ciopenweather_enqueue_scripts' );
 
