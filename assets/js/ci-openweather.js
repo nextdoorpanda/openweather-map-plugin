@@ -10,29 +10,25 @@
     const location = weatherOptionsValues.location;
     const unit = weatherOptionsValues.unit;
 
-    if (!api_key || !location) {
-        return;
-    }
-
     const queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=1&units=${unit}&appid=${api_key}`;
 
-    const getData = new Promise((resolve, reject) => {
-        fetch(queryURL, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Didn't get any response.");
-                }
-                return response.json();
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+    async function getData() {
+        try {
+            const response = await fetch(queryURL, requestOptions);
 
-    getData
+            if(!response.ok) {
+                throw new Error("Didn't get any response.");
+            }
+
+            const data = await response.json();
+
+            return data;
+        } catch(error) {
+            throw error;
+        }
+    }
+
+    getData()
         .then(weatherData => {
             outputData(weatherData);
         })
@@ -44,16 +40,21 @@
         const weatherCity = weatherData.city.name;
         const weatherCountry = weatherData.city.country;
         const weatherLocation = `${weatherCity}, ${weatherCountry}`;
-        const weatherTitle = weatherData.list[0].weather[0].main;
-        const weatherDescription = weatherData.list[0].weather[0].description;
-        const weatherIconCode = weatherData.list[0].weather[0].icon;
+        const weather = weatherData.list[0].weather[0];
+        const weatherTitle = weather.main;
+        const weatherDescription = weather.description;
+        const weatherIconCode = weather.icon;
         const weatherIcon = `http://openweathermap.org/img/w/${weatherIconCode}.png`;
-        const weatherTemperatureValue = `${parseInt(weatherData.list[0].main.temp)}`;
-        const weatherTemperatureDegrees = [{'standard': 'K'}, {'metric': 'C'}, {'imperial': 'F'}];
-        const weatherTemperatureDegree = weatherTemperatureDegrees
-            .filter( obj => weatherOptionsValues.unit in obj)
-            .map(obj => obj[weatherOptionsValues.unit]);
-        const weatherTemperature = `${weatherTemperatureValue}&deg;${weatherTemperatureDegree}`;
+        const weatherTemperatureValue = `${parseInt(weatherData.list[0].main.temp, 10)}`;
+
+        const weatherTemperatureDegrees = {
+            standard: 'K',
+            metric: '&deg;C',
+            imperial: '&deg;F'
+        };
+
+        const weatherTemperatureDegree = weatherTemperatureDegrees[weatherOptionsValues.unit];
+        const weatherTemperature = `${weatherTemperatureValue}${weatherTemperatureDegree}`;
 
         const outputDiv = document.querySelectorAll('.weather-output');
         outputDiv.forEach( item => {
