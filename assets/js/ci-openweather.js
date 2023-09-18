@@ -56,35 +56,12 @@
         const weatherTemperatureDegree = weatherTemperatureDegrees[weatherOptionsValues.unit];
         const weatherTemperature = `${weatherTemperatureValue}${weatherTemperatureDegree}`;
 
-        const outputDiv = document.querySelectorAll('.weather-output');
+        const outputDiv = document.querySelectorAll('.openweather-content-wrap');
         outputDiv.forEach( item => {
-            item.style.padding = "20px";
-            item.innerHTML = setLayout( weatherIcon, weatherTitle, weatherLocation, weatherTemperature, weatherDescription );
+            item.querySelector('.openweather-icon').src = `${weatherIcon}`;
+            item.querySelector('.openweather-icon').alt = `${weatherTitle} icon`;
+            item.querySelector('.openweather-location').innerHTML = `${weatherLocation}`;
+            item.querySelector('.openweather-details').innerHTML = `${weatherTemperature}, ${weatherDescription}`;
         });
-
-        function setLayout( weatherIcon, weatherTitle, weatherLocation, weatherTemperature, weatherDescription ) {
-            return `
-            <div class="weather-widget d-flex justify-content-center align-items-center">
-                <div class="container-fluid">
-                    <div class="row no-gutters">
-                        <div class="col-md-3">
-                            <div class="weather-component d-flex justify-content-center align-items-center">
-                                <img src="${weatherIcon}" alt="${weatherTitle} icon"/>
-                            </div>
-                        </div>
-        
-                        <div class="col-md-9">
-                            <div class="weather-component d-flex flex-column align-items-center justify-content-center">
-                                <div class="weather-location">${weatherLocation}</div>
-                                <div class="weather-details text-nowrap">${weatherTemperature}, ${weatherDescription}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-
-        }
-
     }
 })();

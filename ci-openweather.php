@@ -180,12 +180,31 @@ function shortcode_ciopenweather( $content ) {
 	}
 
 	wp_enqueue_script( 'ci-openweather-js' );
-	wp_enqueue_script( 'ci-openweather-css' );
+	wp_enqueue_style( 'ci-openweather-css' );
 
 	// Pass DB values to JS script.
 	wp_localize_script( 'ci-openweather-js', 'weatherOptionsValues', $options );
 
-	$weather_output = '<div class="weather-output"></div>';
+	$weather_output =
+		'<div class="openweather-content-wrap">
+			<div class="openweather-content d-flex justify-content-center align-items-center">
+                <div class="container-fluid">
+                    <div class="row no-gutters">
+                        <div class="col-md-3">
+                            <div class="openweather-component d-flex justify-content-center align-items-center">
+                                <img class="openweather-icon" src="" alt=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="openweather-component d-flex flex-column justify-content-center align-items-center">
+                                <div class="openweather-location"></div>
+                                <div class="openweather-details text-nowrap"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>';
 
 	return $content . $weather_output;
 }
