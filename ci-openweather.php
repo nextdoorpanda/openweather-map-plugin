@@ -33,15 +33,17 @@ add_action( 'wp_enqueue_scripts', 'ciopenweather_register_scripts' );
 
 
 function ciopenweather_settings_page() {
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
 	add_options_page( __( 'OpenWeather Map', 'ci-openweather' ), __( 'Weather settings', 'ci-openweather' ), 'manage_options', 'ciopenweather-settings', 'ciopenweather_settings_markup' );
 }
 add_action( 'admin_menu', 'ciopenweather_settings_page' );
 
 function ciopenweather_settings_markup() {
 
-	if ( ! current_user_can( 'manage_options' ) ) {
-		return;
-	}
 	?>
 
 	<div class="wrap">
