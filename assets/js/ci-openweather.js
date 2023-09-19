@@ -1,11 +1,6 @@
 (function () {
     'use strict';
 
-    const requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-    };
-
     const api_key = weatherOptionsValues.api_key;
     const location = weatherOptionsValues.location;
     const unit = weatherOptionsValues.unit;
@@ -14,7 +9,7 @@
 
     async function getData() {
         try {
-            const response = await fetch(queryURL, requestOptions);
+            const response = await fetch(queryURL);
 
             if(!response.ok) {
                 throw new Error("Didn't get any response.");
