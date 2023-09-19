@@ -28,6 +28,15 @@ function ciopenweather_register_scripts() {
 	wp_register_script( 'ci-openweather-js', CIOPENWEATHER_URL . '/assets/js/ci-openweather.js', array(), 1.0, true );
 	wp_register_style( 'ci-openweather-css', CIOPENWEATHER_URL . '/assets/css/ci-openweather.css', array(), 1.0 );
 
+	$options = array(
+		'api_key'  => get_option( 'ci-openweather_api_key', '' ),
+		'location' => get_option( 'ci-openweather_location', 'Athens, GR' ),
+		'unit'     => get_option( 'ci-openweather_unit', 'metric' ),
+	);
+
+	// Pass DB values to JS script.
+	wp_localize_script( 'ci-openweather-js', 'weatherOptionsValues', $options );
+
 }
 add_action( 'wp_enqueue_scripts', 'ciopenweather_register_scripts' );
 
@@ -159,33 +168,12 @@ add_shortcode( 'ci-openweather', 'shortcode_ciopenweather' );
 
 function shortcode_ciopenweather( $content ) {
 
-	$options = array(
-		'api_key'  => get_option( 'ci-openweather_api_key' ),
-		'location' => get_option( 'ci-openweather_location' ),
-		'unit'     => get_option( 'ci-openweather_unit' ),
-	);
-
-	if ( empty( $options['api_key'] ) ) {
-		$options['api_key'] = '';
-	}
-
-	if ( empty( $options['location'] ) ) {
-		$options['location'] = 'Athens, GR';
-	}
-
-	if ( empty( $options['unit'] ) ) {
-		$options['unit'] = 'metric';
-	}
-
-	if ( ! $options['api_key'] ) {
+	if ( ! get_option( 'ci-openweather_api_key' ) ) {
 		return;
 	}
 
 	wp_enqueue_script( 'ci-openweather-js' );
 	wp_enqueue_style( 'ci-openweather-css' );
-
-	// Pass DB values to JS script.
-	wp_localize_script( 'ci-openweather-js', 'weatherOptionsValues', $options );
 
 	$weather_output =
 		'<div class="openweather-content-wrap">
