@@ -58,9 +58,9 @@
 
         const outputDiv = document.querySelectorAll('.openweather-content-wrap');
         outputDiv.forEach( item => {
-            item.querySelector('.openweather-icon').src = `${weatherIcon}`;
+            item.querySelector('.openweather-icon').src = weatherIcon;
             item.querySelector('.openweather-icon').alt = `${weatherTitle} icon`;
-            item.querySelector('.openweather-location').innerHTML = `${weatherLocation}`;
+            item.querySelector('.openweather-location').innerHTML = weatherLocation;
             item.querySelector('.openweather-details').innerHTML = `${weatherTemperature}, ${weatherDescription}`;
         });
     }
