@@ -8,19 +8,15 @@
     const queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=1&units=${unit}&appid=${api_key}`;
 
     async function getData() {
-        try {
-            const response = await fetch(queryURL);
+        const response = await fetch(queryURL);
 
-            if(!response.ok) {
-                throw new Error("Didn't get any response.");
-            }
-
-            const data = await response.json();
-
-            return data;
-        } catch(error) {
-            throw error;
+        if(!response.ok) {
+            throw new Error("Didn't get any response.");
         }
+
+        const data = await response.json();
+
+        return data;
     }
 
     getData()
@@ -28,7 +24,7 @@
             outputData(weatherData);
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error(error);
         });
 
     function outputData(weatherData) {
